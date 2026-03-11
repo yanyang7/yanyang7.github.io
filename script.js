@@ -1,4 +1,12 @@
 // 
+// EMAILJS CONFIG — replace these with your real values from emailjs.com
+// 
+const EMAILJS_CONFIG = {
+  publicKey:  '__EMAILJS_PUBLIC_KEY__',
+  serviceId:  '__EMAILJS_SERVICE_ID__',
+  templateId: '__EMAILJS_TEMPLATE_ID__',
+};
+// 
 // TRANSLATIONS
 // 
 const LANGS = {
@@ -982,7 +990,9 @@ function renderContact() {
     </div>
     <hr style="margin:10px 0">
     <p style="font-size:10px;color:#555">${t('contact_social')} &nbsp;
-      <strong>GitHub</strong> &nbsp;|&nbsp; <strong>LinkedIn</strong> &nbsp;|&nbsp; <strong>Twitter/X</strong>
+      <a href="https://github.com/yanyang7" target="_blank"><strong>GitHub</strong></a>
+      &nbsp;|&nbsp;
+      <a href="https://www.linkedin.com/in/yanisgallouze77" target="_blank"><strong>LinkedIn</strong></a>
     </p>`;
 }
 
@@ -1068,11 +1078,49 @@ function filterProjects(cat) {
 // CONTACT FORM
 // 
 function sendContact() {
-  const name = document.getElementById('c-name').value;
-  if (!name) { showDialog('', t('contact_error_title'), t('contact_error_body')); return; }
-  showDialog('', t('contact_sent_title'), t('contact_sent_body', name));
-  clearContact();
+  const name    = (document.getElementById('c-name')    || {}).value || '';
+  const email   = (document.getElementById('c-email')   || {}).value || '';
+  const subject = (document.getElementById('c-subject') || {}).value || '';
+  const message = (document.getElementById('c-msg')     || {}).value || '';
+
+  if (!name.trim()) {
+    showDialog('', t('contact_error_title'), t('contact_error_body'));
+    return;
+  }
+  if (!email.trim()) {
+    showDialog('', t('contact_error_title'), currentLang === 'fr' ? 'Veuillez entrer votre adresse e-mail !' : 'Please enter your email address!');
+    return;
+  }
+  if (!message.trim()) {
+    showDialog('', t('contact_error_title'), currentLang === 'fr' ? 'Veuillez écrire un message !' : 'Please write a message!');
+    return;
+  }
+
+  // Disable send button to prevent double-send
+  const btn = document.querySelector('#contact-content .win95-btn');
+  if (btn) { btn.disabled = true; btn.textContent = currentLang === 'fr' ? ' Envoi...' : ' Sending...'; }
+
+  emailjs.send(EMAILJS_CONFIG.serviceId, EMAILJS_CONFIG.templateId, {
+    from_name:  name.trim(),
+    from_email: email.trim(),
+    subject:    subject.trim() || '(no subject)',
+    message:    message.trim(),
+  })
+  .then(() => {
+    showDialog('', t('contact_sent_title'), t('contact_sent_body', name.trim()));
+    clearContact();
+  })
+  .catch((err) => {
+    console.error('EmailJS error:', err);
+    showDialog('', t('contact_error_title'), currentLang === 'fr'
+      ? 'Échec de l\'envoi. Vérifiez votre connexion et réessayez.'
+      : 'Failed to send. Check your connection and try again.');
+  })
+  .finally(() => {
+    if (btn) { btn.disabled = false; btn.innerHTML = t('contact_send'); }
+  });
 }
+
 function clearContact() {
   ['c-name','c-email','c-subject','c-msg'].forEach(id => {
     const el = document.getElementById(id);
@@ -1911,7 +1959,7 @@ function runTermCmd(raw) {
   const commands = {
     help, clear, ls, pwd, cd, whoami, uname, date: cmdDate,
     echo: cmdEcho, cat, sudo, rm, mkdir, touch, ps, top: cmdTop,
-    man, fortune, cowsay, sl, yes, lolcat, neofetch, history: cmdHistory,
+    man, fortune, sl, yes, lolcat, neofetch, history: cmdHistory,
     exit: cmdExit, reboot: cmdReboot, shutdown: cmdShutdown,
     'git': cmdGit, npm: cmdNpm, python: cmdPython, python3: cmdPython,
     ping, curl, wget, ssh, vim, nano, emacs,
@@ -1949,7 +1997,6 @@ function help() {
     ['top',       'System resource monitor'],
     ['neofetch',  'System info with style'],
     ['fortune',   'Random wisdom (or lack thereof)'],
-    ['cowsay',    'A cow says something'],
     ['sl',        'Very important command'],
     ['yes',       'Be very agreeable'],
     ['lolcat',    'Make things colorful'],
@@ -2063,8 +2110,7 @@ function cd(args) {
 function whoami() {
   termPrint('out', 'yanyan');
   termPrint('out', '');
-  termPrint('out', 'A creative developer who built an entire OS just for a portfolio.');
-  termPrint('out', 'Threat level:  (maximum creativity)');
+  termPrint('out', 'A silly student that digs cybersecurity and networks and likes kicking a ball.');
 }
 
 function uname(args) {
@@ -2293,37 +2339,36 @@ function man(args) {
 
 function fortune() {
   const fortunes = [
-    '"There are only 2 hard problems in computer science: cache invalidation, naming things, and off-by-one errors." — Unknown',
-    '"It works on my machine." — Every developer ever\n\n  Solution: ship your machine.',
-    '"A user interface is like a joke.\n  If you have to explain it, it\'s not that good."',
-    '"The best code is no code at all.\n  Unfortunately, that won\'t get you paid."',
-    '"Programming is 10% writing code\n  and 90% wondering why the code doesn\'t work."',
-    '"Dear future me: I\'m sorry about the code\n  I\'m writing right now. — Past me, always"',
-    '"Any fool can write code a computer can understand.\n  Good programmers write code humans can understand.\n  (Source: nobody writes code humans can understand)"',
-    '"It\'s not a bug — it\'s an undocumented feature."',
-    '"First, solve the problem. Then, write the code.\n  Then spend 3 hours on Stack Overflow anyway."',
-    '"Weeks of coding can save you hours of planning."',
-    '"The day you become a senior developer:\n  you realize you\'ve just unlocked harder problems."',
-    '"Debugging is twice as hard as writing the code.\n  Therefore, if you write code as cleverly as possible,\n  you will never be able to debug it."',
+    '"Move fast and break things.\n  — Mark Zuckerberg\n  (He meant it literally.)"',
+    '"The only way to do great work\n  is to love what you do.\n  — Steve Jobs\n  (He also made you buy a new charger every 2 years.)"',
+    '"Privacy is not something that I\'m merely entitled to,\n  it\'s an absolute prerequisite.\n  — Marlon Brando, 1974\n  (Ahead of his time fr.)"',
+    '"It takes 20 years to build a reputation\n  and a few minutes of cyber-incident\n  to ruin it.\n  — Stéphane Nappo"',
+    '"The internet interprets censorship as damage\n  and routes around it.\n  — John Gilmore, 1993\n  (Still hitting.)"',
+    '"We are stuck with technology\n  when what we really want is just stuff that works.\n  — Douglas Adams"',
+    '"The real problem is not whether machines think\n  but whether men do.\n  — B.F. Skinner"',
+    '"Arguing that you don\'t care about privacy\n  because you have nothing to hide\n  is no different than saying\n  you don\'t care about free speech\n  because you have nothing to say.\n  — Edward Snowden"',
+    '"The question of whether computers can think\n  is like the question of whether submarines can swim.\n  — Edsger Dijkstra"',
+    '"Inside every large program\n  is a small program struggling to get out.\n  — Tony Hoare"',
+    '"Walking on water and developing software from a specification\n  are easy — if both are frozen.\n  — Edward V. Berard"',
+    '"There are two industries that call their customers \'users\':\n  illegal drugs and software.\n  — Edward Tufte"',
+    '"We use industry-leading security practices.\n  The industry is not doing well."',
+    '"Our AI is trained on your data\n  to better serve you.\n  You are the product.\n  You\'re welcome."',
+    '"We have detected unusual activity on your account.\n  It was you.\n  We locked you out anyway."',
+    '"Your data is fully encrypted.\n  We just need you to accept\n  these 14 tracking cookies first."',
+    '"We take your privacy seriously.\n  Here is a 47-page document explaining\n  all the ways we don\'t."',
+    '"Error 404: Accountability not found."',
+    '"We pushed a small update.\n  Everything is broken.\n  This is fine."',
+    '"Please create a strong password.\n  It must be 8 characters.\n  It cannot contain letters, numbers, or symbols."',
+    '"We will never sell your data.\n  We will share it with partners.\n  Partners will sell your data."',
+    '"Your session has expired\n  for your security.\n  You had typed 300 words.\n  They are gone.\n  You are secure."',
+    '"The system is down for scheduled maintenance.\n  The maintenance was not scheduled.\n  The system is just down."',
+    '"We deployed a hotfix.\n  It fixed nothing.\n  It introduced two new issues.\n  We call this progress."',
+    '"Blockchain will solve this.\n  We do not know what \'this\' is.\n  Blockchain will solve it."',
   ];
   const f = fortunes[Math.floor(Math.random() * fortunes.length)];
   termPrint('out', '');
   f.split('\n').forEach(l => termPrint('warn', l));
   termPrint('out', '');
-}
-
-function cowsay(args) {
-  const msg = args.length ? args.join(' ') : 'Moo. (you didn\'t give me anything to say)';
-  const len = msg.length;
-  const border = '-'.repeat(len + 2);
-  termPrint('out', ` ${border}`);
-  termPrint('out', `< ${msg} >`);
-  termPrint('out', ` ${border}`);
-  termPrint('out', '        \\   ^__^');
-  termPrint('out', '         \\  (oo)\\_______');
-  termPrint('out', '            (__)\\       )\\/\\');
-  termPrint('out', '                ||----w |');
-  termPrint('out', '                ||     ||');
 }
 
 function sl() {
@@ -3056,7 +3101,7 @@ const recruiterMessages = [
   { sender:`Bank Security Alert `, msg:`URGENT!\n\nDear valued customer Yanis,\n\nYour bank account has been hacked by extremely dangerous hackers.\n\nTo secure your account please send:\n\n• your password\n• your credit card\n• your favorite pizza topping\n\nThank you.\nTotallyRealBank-security.ru` },
   { sender:`Your Router`, msg:`Hi Yanis.\n\nIt's me. Your home router. I have been running for 947 days without reboot.\n\nPlease... I am tired boss.` },
   { sender:`Classified Agency `, msg:`Yanis.\n\nWe cannot reveal who we are. We cannot reveal what we do. But we noticed your skills.\n\nPlease report to building  at  tomorrow.` },
-  { sender:`Definitely Not The NSA`, msg:`Hi Yanyan.\n\nWe accidentally monitored your portfolio.\n\nYour firewall configuration impressed us.\n\nWould you be interested in securing... some stuff I guess?` },
+  { sender:`Definitely Not The NSA`, msg:`Hi Yanis.\n\nWe accidentally monitored your portfolio.\n\nYour firewall configuration impressed us.\n\nWould you be interested in securing... some stuff I guess?` },
   { sender:`Intergalactic IT Department `, msg:`Greetings Earth network specialist.\n\nOur galaxy-wide communication network has a latency issue.\n\nAverage ping between planets: 12 years.\n\nWe suspect a DNS problem.` },
   { sender:`Eyrian @ Bonus NC`, msg:`Hi Yanis,\n\n We’re looking for someone to pentest our app and secure our servers (and also scam some elderly).\n\nSalary: bread and water (not even with a grain of sugar).\n\nBonus: free hoodies and the satisfaction of blocking billions of suspicious IPs plus a giraffe.\n\nLet us know if you're interested ASAP.`}
 ];
@@ -3210,6 +3255,9 @@ function scheduleBSOD() {
 // BOOT SEQUENCE
 // 
 window.onload = () => {
+  // Init EmailJS
+  emailjs.init(EMAILJS_CONFIG.publicKey);
+
   // Initial render
   renderAbout(); renderPortfolio(); renderResume();
   renderContact(); renderRecycle(); renderMyComputer(); renderIE();
