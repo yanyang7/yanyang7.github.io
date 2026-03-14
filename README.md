@@ -16,8 +16,8 @@
     |   /*  who am i                                                       */       |
     |   /*-----------------------------------------------------------------*/       |
     |                                                                               |
-    |     yanis gallouze. cs student in new caledonia.                              |
-    |     into cybersecurity, networks, embedded stuff.                             |
+    |     yanis gallouze, 23. cs student in new caledonia.                              |
+    |     into cybersecurity, networks, embedded systems.                             |
     |                                                                               |
     |                                                                               |
     |   /*-----------------------------------------------------------------*/       |
