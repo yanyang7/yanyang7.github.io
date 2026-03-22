@@ -95,42 +95,47 @@
       <div class="status-panel">yanyanOS v1.6</div>
     </div>
   </div>
-  <!-- PROJECTS -->
-  <div class="window" id="win-portfolio" style="width:680px;height:500px;top:60px;left:180px">
-    <div class="window-titlebar" onmousedown="startDrag(event,'win-portfolio')">
-      <div class="window-title"><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAABb0lEQVR4nNWXUY6DMAxEX1Z7L3yzujezT+b9IEkDhHZVaFAtQQQkmfGMsQC+PVQ1jqz/OQouIgCHSLwNXsLMYiiJFvwoibQH8GzR7Xbr3nd3siXdff8Vc3ZsDjOLdeaoBpyjxALczDZjF7zQO0Dit3dzmgR3q6OZLWRP9zvk6wBSQEoQUdZPmBkiEqq6TnLfnp4Ce5lHz6gdJcp+ubb2lWn974FHBmlBKxGWc/ZJsCDRbURd2bNwESxqPOVTkT8lMPP6vLEDd9tgbWqgBXefNxIxVMFdADADSQYKKJgJ7o95IKR0RxVEZEFiVRJzAkf7+asoJJo+UbG7Xe3MmGup1MD2FW1qIGXJzx2nSRCxbJNXOyqJokCv+Zw5FhU2Sjws+Bx4sUFVK4nhCrS1wLoZjbQhg/cJjFDgKYERNlyqQMSOAiNJvCQwsBCvUeAlgcsUeJC4SIFCYLQCaU1g/sr4bOSPklRPqxjxi/X+j8vZ8QdH0Y6WP5FYoAAAAABJRU5ErkJggg==" width="14" height="14" style="image-rendering:pixelated;vertical-align:middle"> <span data-i18n="title_portfolio">My Projects</span></div>
-      <div class="window-controls">
-        <div class="win-btn" onclick="minimizeWindow('portfolio')">_</div>
-        <div class="win-btn" onclick="maximizeWindow('win-portfolio')">□</div>
-        <div class="win-btn" onclick="closeWindow('portfolio')">✕</div>
-      </div>
-    </div>
-    <div class="window-menubar">
-      <span class="menu-item" data-i18n="menu_file">File</span>
-      <span class="menu-item" data-i18n="menu_view">View</span>
-      <span class="menu-item" data-i18n="menu_sortby">Sort by</span>
-    </div>
-    <div class="window-content" style="padding:0;display:flex;flex-direction:column;height:calc(100% - 48px)">
-      <!-- toolbar -->
-      <div style="display:flex;gap:2px;padding:3px 5px;background:var(--win-gray);border-bottom:1px solid #808080;align-items:center">
-        <div style="flex:1"></div>
-        <button class="win95-btn" id="pf-view-grid" onclick="pfSetView('grid')" title="Grid view">▦</button>
-        <button class="win95-btn" id="pf-view-list" onclick="pfSetView('list')" title="List view">☰</button>
-      </div>
-      <!-- main area: project list + detail pane -->
-      <div style="display:flex;flex:1;overflow:hidden">
-        <!-- left: project list -->
-        <div id="pf-list" style="width:220px;min-width:180px;border-right:2px solid #808080;overflow-y:auto;background:#fff"></div>
-        <!-- right: detail pane -->
-        <div id="pf-detail" style="flex:1;overflow-y:auto;padding:14px;background:#fff;font-size:12px">
-          <div style="color:#888;margin-top:40px;text-align:center;font-size:11px" data-i18n="pf_select_hint">← Select a project to view details</div>
-        </div>
-      </div>
-    </div>
-    <div class="window-statusbar">
-      <div class="status-panel" id="pf-count">5 objects</div>
+<!-- PROJECTS -->
+<div class="window" id="win-portfolio" style="width:680px;height:500px;top:60px;left:180px">
+  <div class="window-titlebar" onmousedown="startDrag(event,'win-portfolio')">
+    <div class="window-title"><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAABb0lEQVR4nNWXUY6DMAxEX1Z7L3yzujezT+b9IEkDhHZVaFAtQQQkmfGMsQC+PVQ1jqz/OQouIgCHSLwNXsLMYiiJFvwoibQH8GzR7Xbr3nd3siXdff8Vc3ZsDjOLdeaoBpyjxALczDZjF7zQO0Dit3dzmgR3q6OZLWRP9zvk6wBSQEoQUdZPmBkiEqq6TnLfnp4Ce5lHz6gdJcp+ubb2lWn974FHBmlBKxGWc/ZJsCDRbURd2bNwESxqPOVTkT8lMPP6vLEDd9tgbWqgBXefNxIxVMFdADADSQYKKJgJ7o95IKR0RxVEZEFiVRJzAkf7+asoJJo+UbG7Xe3MmGup1MD2FW1qIGXJzx2nSRCxbJNXOyqJokCv+Zw5FhU2Sjws+Bx4sUFVK4nhCrS1wLoZjbQhg/cJjFDgKYERNlyqQMSOAiNJvCQwsBCvUeAlgcsUeJC4SIFCYLQCaU1g/sr4bOSPklRPqxjxi/X+j8vZ8QdH0Y6WP5FYoAAAAABJRU5ErkJggg==" width="14" height="14" style="image-rendering:pixelated;vertical-align:middle"> <span data-i18n="title_portfolio">My Projects</span></div>
+    <div class="window-controls">
+      <div class="win-btn" onclick="minimizeWindow('portfolio')">_</div>
+      <div class="win-btn" onclick="maximizeWindow('win-portfolio')">□</div>
+      <div class="win-btn" onclick="closeWindow('portfolio')">✕</div>
     </div>
   </div>
+  <div class="window-menubar">
+    <span class="menu-item" data-i18n="menu_file">File</span>
+    <span class="menu-item" data-i18n="menu_view">View</span>
+    <span class="menu-item" data-i18n="menu_sortby">Sort by</span>
+  </div>
+  <div class="window-content" style="padding:0;display:flex;flex-direction:column;height:calc(100% - 48px)">
+    <!-- toolbar: tabs on left, view buttons on right -->
+    <div style="display:flex;align-items:center;justify-content:space-between;padding:3px 5px;background:var(--win-gray);border-bottom:2px solid var(--win-dark);flex-shrink:0">
+      <div id="pf-tab-bar" style="display:flex;gap:4px">
+        <button class="win95-btn" id="pf-tab-projects" onclick="pfSetTab('projects')" style="font-size:11px;padding:2px 10px">Projects</button>
+        <button class="win95-btn" id="pf-tab-blog" onclick="pfSetTab('blog')" style="font-size:11px;padding:2px 10px">Blog</button>
+      </div>
+      <div style="display:flex;gap:4px">
+        <button class="win95-btn" id="pf-view-list" onclick="pfSetView('list')" title="List view">☰</button>
+        <button class="win95-btn" id="pf-view-grid" onclick="pfSetView('grid')" title="Grid view">▦</button>
+      </div>
+    </div>
+    <!-- main area: project list + detail pane (position:relative for grid overlay) -->
+    <div style="display:flex;flex:1;overflow:hidden;position:relative">
+      <div id="pf-list" style="width:220px;min-width:180px;border-right:2px solid #808080;overflow-y:auto;background:#fff"></div>
+      <div id="pf-detail" style="flex:1;overflow-y:auto;padding:14px;background:#fff;font-size:12px">
+        <div style="color:#888;margin-top:40px;text-align:center;font-size:11px" data-i18n="pf_select_hint">← Select a project to view details</div>
+      </div>
+    </div>
+  </div>
+  <div class="window-statusbar">
+    <div class="status-panel status-bar-text" id="pf-count">5 objects</div>
+  </div>
+</div>
+
+
   <!-- RESUME -->
   <div class="window" id="win-resume" style="width:460px;height:460px;top:50px;left:240px">
     <div class="window-titlebar" onmousedown="startDrag(event,'win-resume')">
